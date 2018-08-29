@@ -41,4 +41,4 @@ QUnit.module('Тестируем функцию rle', function() {
 		for (let args in argsSet) assert.throws(() => rle.apply(args), err)
 	})
 
-});
+})
