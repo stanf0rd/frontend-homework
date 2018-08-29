@@ -1,13 +1,14 @@
 'use strict';
 
-QUnit.module('Тестируем функцию rle', function () {
-	QUnit.test('rle работает правильно', function (assert) {
+
+QUnit.module('Тестируем функцию rle', function() {
+	QUnit.test('rle() работает правильно', function(assert) {
 		assert.strictEqual(rle('AAAB'), 'A3B');
 		assert.strictEqual(rle('BCCDDDAXXXX'), 'BC2D3AX4');
 		assert.strictEqual(rle('AVVVBBBVVXDHJFFFFDDDDDDHAAAAJJJDDSLSSSDDDD'), 'AV3B3V2XDHJF4D6HA4J3D2SLS3D4');
-	});
+	})
 
-	QUnit.test('расширенный тест rle пройден', function (assert) {
+	QUnit.test('расширенный тест rle() пройден', function(assert) {
 		let strings = {
 			'a': 'a',
 			'abcdef': 'abcdef',
@@ -17,5 +18,27 @@ QUnit.module('Тестируем функцию rle', function () {
 			'ffffffffffdddddddddddjjjjjjjjjjrrrrrrr': 'f10d11j10r7'
 		}
 		for (let key in strings) assert.strictEqual(rle(key), strings[key])
-	});
+	})
+
+	QUnit.test('отправка строк с цифрами в rle()', function(assert) {
+		assert.throws(
+			() => rle('a2b3c3db2d3bk3'),
+			Error, 'Unable to encode string that includes digits'
+		)
+	})
+
+	QUnit.test('отправка неверных аргументов в rle()', function(assert) {
+		let err = new TypeError('Invalid arguments, expected one string')
+		let argsSet = [
+			[],
+			[NaN],
+			['test', NaN],
+			[undefined],
+			['test', undefined, NaN],
+			[5],
+			['test', 5]
+		]
+		for (let args in argsSet) assert.throws(() => rle.apply(args), err)
+	})
+
 });
