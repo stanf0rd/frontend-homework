@@ -12,10 +12,11 @@ function rle(str) {
 
     let result = "";
     let repeats = 0;
+    let length = str.length;
 
-    for (let i = 0; i != str.length; ++i) {
-        let char = str.charAt(i);
-        let next = str.charAt(i + 1);
+    for (let i = 0; i != length; ++i) {
+        let char = str[i];
+        let next = str[i + 1];
 
         if (isNumeric(char)) {
             throw new Error('Unable to encode string that includes digits');
